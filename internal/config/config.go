@@ -9,23 +9,29 @@ import (
 )
 
 type Config struct {
-	ServiceName string `yaml:"service_name" required:"true"`
-	Env         string `yaml:"env" required:"true"`
-	PostgresUrl string `yaml:"postgres_url" required:"true"`
+	ServiceName     string `yaml:"service_name" required:"true"`
+	Env             string `yaml:"env" required:"true"`
+	PostgresUrl     string `yaml:"postgres_url" required:"true"`
+	ApplicationPort int    `yaml:"application_port" required:"true"`
 }
 
 var AppConfig Config
 
-func Configurations() (environment string, err error) {
+func Configurations(path string) (environment string, err error) {
 	env := os.Getenv("ENV")
 
 	if env == "" {
 		env = "dev" // default to "dev" environment
 	}
 
-	viper.SetConfigName(env)         // Config file name without extension
-	viper.SetConfigType("yaml")      // Config file format
-	viper.AddConfigPath("./configs") // Path to look for the config file
+	if path == "" {
+		log.Printf("no config path provided. Using default path: ./configs")
+		path = "./configs"
+	}
+
+	viper.SetConfigName(env)    // Config file name without extension
+	viper.SetConfigType("yaml") // Config file format
+	viper.AddConfigPath(path)   // Path to look for the config file
 
 	bindEnvironmentVariables()
 
@@ -51,4 +57,5 @@ func bindEnvironmentVariables() {
 	viper.BindEnv("PostgresUrl", "POSTGRES_URL")
 	viper.BindEnv("ServiceName", "SERVICE_NAME")
 	viper.BindEnv("Env", "ENV")
+	viper.BindEnv("ApplicationPort", "APPLICATION_PORT")
 }

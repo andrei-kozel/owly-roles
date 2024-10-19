@@ -1,2 +1,4 @@
 ServiceName: "owly-roles"
 ENV: "dev"
+ApplicationPort: 3000
+PostgresUrl: "postgresql://postgres:postgres@localhost:5432/owly_roles_db?sslmode=disable"

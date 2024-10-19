@@ -1,7 +1,7 @@
 package domain
 
 type Role struct {
-	ID          string
+	Guid        string
 	Name        string
 	Description string
 }
