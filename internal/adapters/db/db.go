@@ -32,3 +32,22 @@ func NewAdapter(dataSourceUrl string) (*Adapter, error) {
 
 	return &Adapter{db: db}, nil
 }
+
+func (a *Adapter) Get(id string) (*Role, error) {
+	var role Role
+	result := a.db.First(&role, id)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &role, nil
+}
+
+func (a *Adapter) Save(role *Role) error {
+	result := a.db.Save(role)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
