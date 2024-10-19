@@ -47,5 +47,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.12
-	modernc.org/libc v1.61.0
 )
