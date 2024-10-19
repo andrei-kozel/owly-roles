@@ -24,7 +24,7 @@ func main() {
 	log.Info("Service started", "config", config.AppConfig)
 
 	// Connect to the database
-	db, err := db.NewRoleRepository(config.AppConfig.PostgresUrl, log)
+	db, err := db.NewRoleRepository(config.AppConfig.PostgresUrl)
 	if err != nil {
 		log.Error("Failed to open the database", "error", err)
 		panic(err)
