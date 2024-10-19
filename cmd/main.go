@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/andrei-kozel/go-utils/utils/prettylog"
 	"github.com/andrei-kozel/owly-roles/internal/adapters/db"
 	"github.com/andrei-kozel/owly-roles/internal/adapters/grpc"
@@ -11,15 +13,18 @@ import (
 )
 
 func main() {
-	// Load the config
-	config.Configurations("../configs")
+	var attr string
+	if len(os.Args) > 1 {
+		attr = os.Args[1]
+	}
+	config.Configurations(attr)
 
 	// Setup the logger
 	log := prettylog.SetupLoggger(config.AppConfig.Env)
 	log.Info("Service started", "config", config.AppConfig)
 
 	// Connect to the database
-	db, err := db.NewRoleRepository(config.AppConfig.PostgresUrl)
+	db, err := db.NewRoleRepository(config.AppConfig.PostgresUrl, log)
 	if err != nil {
 		log.Error("Failed to open the database", "error", err)
 		panic(err)
