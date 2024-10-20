@@ -12,117 +12,97 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func TestCreateRole(t *testing.T) {
+func setupRoleService() (*db.MockRoleRepository, *RoleService) {
 	mockRoleRepository := new(db.MockRoleRepository)
 	application := api.NewApplication(mockRoleRepository)
 	roleService := NewRoleService(application, 3000)
+	return mockRoleRepository, roleService
+}
 
-	role := &roles.CreateRoleRequest{
+func TestCreateRole(t *testing.T) {
+	mockRepo, roleService := setupRoleService()
+
+	roleRequest := &roles.CreateRoleRequest{
 		Name:        "admin",
 		Description: "admin role",
 	}
 
-	// Set up expectations
-	mockRoleRepository.On("AddRole", mock.Anything, mock.AnythingOfType("*domain.Role")).Return(&domain.Role{
+	expectedRole := &domain.Role{
 		Guid:        "12345",
 		Name:        "admin",
 		Description: "admin role",
-	}, nil)
+	}
 
-	// Call the method
-	resp, err := roleService.CreateRole(context.Background(), role)
+	mockRepo.On("AddRole", mock.Anything, mock.AnythingOfType("*domain.Role")).Return(expectedRole, nil)
 
-	// Assertions
+	resp, err := roleService.CreateRole(context.Background(), roleRequest)
+
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.Equal(t, "12345", resp.Role.Id)
 	assert.Equal(t, "admin", resp.Role.Name)
 	assert.Equal(t, "admin role", resp.Role.Description)
 
-	// Ensure that the expectations were met
-	mockRoleRepository.AssertExpectations(t)
+	mockRepo.AssertExpectations(t)
 }
 
 func TestGetRoles(t *testing.T) {
-	mockRoleRepository := new(db.MockRoleRepository)
-	application := api.NewApplication(mockRoleRepository)
-	roleService := NewRoleService(application, 3000)
+	mockRepo, roleService := setupRoleService()
 
-	// Set up expectations
-	mockRoleRepository.On("GetRoles", mock.Anything).Return([]*domain.Role{
-		{
-			Guid:        "12345",
-			Name:        "admin",
-			Description: "admin role",
-		},
-		{
-			Guid:        "67890",
-			Name:        "user",
-			Description: "user role",
-		},
-	}, nil)
+	expectedRoles := []*domain.Role{
+		{Guid: "12345", Name: "admin", Description: "admin role"},
+		{Guid: "67890", Name: "user", Description: "user role"},
+	}
 
-	// Call the method
+	mockRepo.On("GetRoles", mock.Anything).Return(expectedRoles, nil)
+
 	resp, err := roleService.GetRoles(context.Background(), &roles.GetRolesRequest{})
-	roles := resp.Roles
 
-	// Assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	assert.Equal(t, 2, len(roles))
-	assert.Equal(t, "12345", roles[0].Id)
-	assert.Equal(t, "admin", roles[0].Name)
-	assert.Equal(t, "admin role", roles[0].Description)
-	assert.Equal(t, "67890", roles[1].Id)
-	assert.Equal(t, "user", roles[1].Name)
-	assert.Equal(t, "user role", roles[1].Description)
+	assert.Equal(t, 2, len(resp.Roles))
 
-	// Ensure that the expectations were met
-	mockRoleRepository.AssertExpectations(t)
+	for i, role := range expectedRoles {
+		assert.Equal(t, role.Guid, resp.Roles[i].Id)
+		assert.Equal(t, role.Name, resp.Roles[i].Name)
+		assert.Equal(t, role.Description, resp.Roles[i].Description)
+	}
+
+	mockRepo.AssertExpectations(t)
 }
 
 func TestGetRole(t *testing.T) {
-	mockRoleRepository := new(db.MockRoleRepository)
-	application := api.NewApplication(mockRoleRepository)
-	roleService := NewRoleService(application, 3000)
+	mockRepo, roleService := setupRoleService()
 
-	// Set up expectations
-	mockRoleRepository.On("GetRole", mock.Anything, mock.Anything).Return(&domain.Role{
+	expectedRole := &domain.Role{
 		Guid:        "12345",
 		Name:        "admin",
 		Description: "admin role",
-	}, nil)
+	}
 
-	// Call the method
+	mockRepo.On("GetRole", mock.Anything, mock.Anything).Return(expectedRole, nil)
+
 	resp, err := roleService.GetRole(context.Background(), &roles.GetRoleRequest{Id: "12345"})
 
-	// Assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.Equal(t, "12345", resp.Role.Id)
 	assert.Equal(t, "admin", resp.Role.Name)
 	assert.Equal(t, "admin role", resp.Role.Description)
 
-	// Ensure that the expectations were met
-	mockRoleRepository.AssertExpectations(t)
+	mockRepo.AssertExpectations(t)
 }
 
 func TestDeleteRole(t *testing.T) {
-	mockRoleRepository := new(db.MockRoleRepository)
-	application := api.NewApplication(mockRoleRepository)
-	roleService := NewRoleService(application, 3000)
+	mockRepo, roleService := setupRoleService()
 
-	// Set up expectations
-	mockRoleRepository.On("DeleteRole", mock.Anything, mock.Anything).Return(nil)
+	mockRepo.On("DeleteRole", mock.Anything, mock.Anything).Return(nil)
 
-	// Call the method
 	resp, err := roleService.DeleteRole(context.Background(), &roles.DeleteRoleRequest{Id: "12345"})
 
-	// Assertions
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.Equal(t, "12345", resp.Role.Id)
 
-	// Ensure that the expectations were met
-	mockRoleRepository.AssertExpectations(t)
+	mockRepo.AssertExpectations(t)
 }
