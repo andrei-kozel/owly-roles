@@ -2,7 +2,6 @@ package grpc
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/andrei-kozel/owly-proto/golang/roles"
 	"github.com/andrei-kozel/owly-roles/internal/application/core/domain"
@@ -42,12 +41,7 @@ func (r RoleService) CreateRole(ctx context.Context, role *roles.CreateRoleReque
 }
 
 func (r RoleService) DeleteRole(ctx context.Context, role *roles.DeleteRoleRequest) (*roles.RoleResponse, error) {
-	id, err := strconv.Atoi(role.Id)
-	if err != nil {
-		return nil, err
-	}
-
-	err = r.api.DeleteRole(ctx, id)
+	err := r.api.DeleteRole(ctx, role.Id)
 	if err != nil {
 		return nil, err
 	}

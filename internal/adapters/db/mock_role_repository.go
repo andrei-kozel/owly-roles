@@ -21,8 +21,11 @@ func (m *MockRoleRepository) GetRole(ctx context.Context, id string) (*domain.Ro
 	return args.Get(0).(*domain.Role), args.Error(1)
 }
 
-func (m *MockRoleRepository) DeleteRole(ctx context.Context, id int) error {
+func (m *MockRoleRepository) DeleteRole(ctx context.Context, id string) error {
 	args := m.Called(ctx, id)
+	if id == "nonexistent-id" {
+		return args.Error(1)
+	}
 	return args.Error(0)
 }
 

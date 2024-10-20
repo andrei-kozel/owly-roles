@@ -21,7 +21,7 @@ func (a *Application) AddRole(context context.Context, role *domain.Role) (*doma
 	return a.db.AddRole(context, role)
 }
 
-func (a *Application) DeleteRole(context context.Context, id int) error {
+func (a *Application) DeleteRole(context context.Context, id string) error {
 	return a.db.DeleteRole(context, id)
 }
 

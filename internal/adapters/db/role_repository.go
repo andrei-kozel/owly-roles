@@ -61,8 +61,8 @@ func (r *RoleRepository) AddRole(context context.Context, role *domain.Role) (*d
 	}, nil
 }
 
-func (r *RoleRepository) DeleteRole(ctx context.Context, id int) error {
-	result := r.db.Delete(&Role{}, "id = ?", id)
+func (r *RoleRepository) DeleteRole(ctx context.Context, id string) error {
+	result := r.db.Delete(&Role{}, "guid = ?", id)
 	if result.Error != nil {
 		return result.Error
 	}

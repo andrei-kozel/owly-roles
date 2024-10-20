@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/andrei-kozel/owly-proto/golang/roles"
@@ -104,5 +105,74 @@ func TestDeleteRole(t *testing.T) {
 	assert.NotNil(t, resp)
 	assert.Equal(t, "12345", resp.Role.Id)
 
+	mockRepo.AssertExpectations(t)
+}
+
+func TestGetRole_Error(t *testing.T) {
+	mockRepo, roleService := setupRoleService()
+
+	// Simulate an error returned by the GetRole method in the mock repository
+	mockRepo.On("GetRole", mock.Anything, mock.Anything).Return((*domain.Role)(nil), errors.New("role not found"))
+
+	// Call the GetRole method
+	resp, err := roleService.GetRole(context.Background(), &roles.GetRoleRequest{Id: "nonexistent-id"})
+
+	// Assertions
+	assert.Nil(t, resp)
+	assert.Error(t, err)
+	assert.Equal(t, "role not found", err.Error())
+	mockRepo.AssertExpectations(t)
+}
+
+func TestDeleteRole_Error(t *testing.T) {
+	mockRepo, roleService := setupRoleService()
+
+	// Simulate an error returned by the DeleteRole method in the mock repository
+	mockRepo.On("DeleteRole", mock.Anything, mock.Anything).Return((*domain.Role)(nil), errors.New("role not found"))
+
+	// Call the DeleteRole method
+	resp, err := roleService.DeleteRole(context.Background(), &roles.DeleteRoleRequest{Id: "nonexistent-id"})
+
+	// Assertions
+	assert.Nil(t, resp)                            // Response should be nil if there's an error
+	assert.Error(t, err)                           // There should be an error
+	assert.Equal(t, "role not found", err.Error()) // Error message should match the expected error
+	mockRepo.AssertExpectations(t)                 // Ensure the mock expectations were met
+}
+
+func TestGetRoles_Error(t *testing.T) {
+	mockRepo, roleService := setupRoleService()
+
+	// Simulate an error returned by the GetRoles method in the mock repository
+	mockRepo.On("GetRoles", mock.Anything).Return(([]*domain.Role)(nil), errors.New("error fetching roles"))
+
+	// Call the GetRoles method
+	resp, err := roleService.GetRoles(context.Background(), &roles.GetRolesRequest{})
+
+	// Assertions
+	assert.Nil(t, resp)
+	assert.Error(t, err)
+	assert.Equal(t, "error fetching roles", err.Error())
+	mockRepo.AssertExpectations(t)
+}
+
+func TestCreateRole_Error(t *testing.T) {
+	mockRepo, roleService := setupRoleService()
+
+	roleRequest := &roles.CreateRoleRequest{
+		Name:        "admin",
+		Description: "admin role",
+	}
+
+	// Simulate an error returned by the AddRole method in the mock repository
+	mockRepo.On("AddRole", mock.Anything, mock.AnythingOfType("*domain.Role")).Return((*domain.Role)(nil), errors.New("error creating role"))
+
+	// Call the CreateRole method
+	resp, err := roleService.CreateRole(context.Background(), roleRequest)
+
+	// Assertions
+	assert.Nil(t, resp)
+	assert.Error(t, err)
+	assert.Equal(t, "error creating role", err.Error())
 	mockRepo.AssertExpectations(t)
 }
