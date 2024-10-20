@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/andrei-kozel/go-utils v0.0.1
-	github.com/andrei-kozel/owly-proto v0.0.9
+	github.com/andrei-kozel/owly-proto/golang v0.0.0-20241020132622-dffca8cd39cc
 	github.com/lib/pq v1.10.9
 	github.com/spf13/viper v1.19.0
 	google.golang.org/grpc v1.67.1

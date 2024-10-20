@@ -1,7 +1,7 @@
 github.com/andrei-kozel/go-utils v0.0.1 h1:gerOPZzeWEGTR8LQNs+FYfkaOFSjcWOs4MA6/1idQl8=
 github.com/andrei-kozel/go-utils v0.0.1/go.mod h1:9fHBc0AmadGStK4qfWrGWQ6Mowk7jFCd/FcT5Guf0+Y=
-github.com/andrei-kozel/owly-proto v0.0.9 h1:uzvHSLp0qQgwM7KgN45JBmdb7nKqJjlXJCZzI8zWG4E=
-github.com/andrei-kozel/owly-proto v0.0.9/go.mod h1:ELm77S3cdweVJG3A3oXKQBWt7zKoy0rpQfnSlZioUTo=
+github.com/andrei-kozel/owly-proto/golang v0.0.0-20241020132622-dffca8cd39cc h1:tT6niktTXIzDIcg/XFRhjwVdwmKdj50JRApk5h68e64=
+github.com/andrei-kozel/owly-proto/golang v0.0.0-20241020132622-dffca8cd39cc/go.mod h1:FKKnXk7WYJNLN2QoPpeHAVUVGKw86dxJNzqCgx3T/1s=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1VwoXQT9A3Wy9MM3WgvqSxFWenqJduM=
