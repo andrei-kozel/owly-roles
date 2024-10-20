@@ -1,5 +1,9 @@
 github.com/andrei-kozel/go-utils v0.0.1 h1:gerOPZzeWEGTR8LQNs+FYfkaOFSjcWOs4MA6/1idQl8=
 github.com/andrei-kozel/go-utils v0.0.1/go.mod h1:9fHBc0AmadGStK4qfWrGWQ6Mowk7jFCd/FcT5Guf0+Y=
+github.com/andrei-kozel/owly-common v0.0.0-20241020180608-31ad36c293ba h1:R6cXieepHwAtIoc6QQShoMubveSDLVWrY4/mz6CtlYI=
+github.com/andrei-kozel/owly-common v0.0.0-20241020180608-31ad36c293ba/go.mod h1:d4UMzDkgnbsAwSBX/F0Jt0NUoeDTwQ7b/nucVJ7is0c=
+github.com/andrei-kozel/owly-common v0.0.1 h1:DEr8mN/HnQJfxZ14Hazrqx0ulnOzHBHJuggBpSWFbSY=
+github.com/andrei-kozel/owly-common v0.0.1/go.mod h1:qBg7Hn4C5jlHuvKww1qwUaBJVzc1w575aq1zahAIBDE=
 github.com/andrei-kozel/owly-proto/golang v0.0.0-20241020132622-dffca8cd39cc h1:tT6niktTXIzDIcg/XFRhjwVdwmKdj50JRApk5h68e64=
 github.com/andrei-kozel/owly-proto/golang v0.0.0-20241020132622-dffca8cd39cc/go.mod h1:FKKnXk7WYJNLN2QoPpeHAVUVGKw86dxJNzqCgx3T/1s=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

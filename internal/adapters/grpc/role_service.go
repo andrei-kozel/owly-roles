@@ -3,8 +3,8 @@ package grpc
 import (
 	"context"
 
+	"github.com/andrei-kozel/owly-common/domain"
 	"github.com/andrei-kozel/owly-proto/golang/roles"
-	"github.com/andrei-kozel/owly-roles/internal/application/core/domain"
 	"github.com/andrei-kozel/owly-roles/internal/ports"
 	"github.com/google/uuid"
 )

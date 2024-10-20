@@ -5,10 +5,10 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/andrei-kozel/owly-common/domain"
 	"github.com/andrei-kozel/owly-proto/golang/roles"
 	"github.com/andrei-kozel/owly-roles/internal/adapters/db"
 	"github.com/andrei-kozel/owly-roles/internal/application/core/api"
-	"github.com/andrei-kozel/owly-roles/internal/application/core/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

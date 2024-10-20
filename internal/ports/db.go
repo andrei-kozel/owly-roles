@@ -3,7 +3,7 @@ package ports
 import (
 	"context"
 
-	"github.com/andrei-kozel/owly-roles/internal/application/core/domain"
+	"github.com/andrei-kozel/owly-common/domain"
 )
 
 type DBPort interface {
