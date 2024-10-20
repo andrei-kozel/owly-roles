@@ -78,3 +78,18 @@ func (r RoleService) GetRoles(ctx context.Context, _ *roles.GetRolesRequest) (*r
 		Roles: rls,
 	}, nil
 }
+
+func (r RoleService) GetRole(ctx context.Context, role *roles.GetRoleRequest) (*roles.GetRoleResponse, error) {
+	response, err := r.api.GetRole(ctx, role.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &roles.GetRoleResponse{
+		Role: &roles.Role{
+			Id:          response.Guid,
+			Name:        response.Name,
+			Description: response.Description,
+		},
+	}, nil
+}

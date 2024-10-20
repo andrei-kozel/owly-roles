@@ -35,7 +35,7 @@ func NewRoleRepository(dataSourceUrl string) (*RoleRepository, error) {
 
 func (r *RoleRepository) GetRole(ctx context.Context, id string) (*domain.Role, error) {
 	var role domain.Role
-	result := r.db.WithContext(ctx).First(&role, "id = ?", id)
+	result := r.db.WithContext(ctx).First(&role, "guid = ?", id)
 	if result.Error != nil {
 		return nil, result.Error
 	}
